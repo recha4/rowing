@@ -5,13 +5,12 @@ const exportTitle = document.getElementById('exportTitle');
 
 const columns = [
   { key: 'athlete', type: 'text', placeholder: 'Name' },
+  { key: 'boat', type: 'text', placeholder: 'Boot' },
   { key: 'warmup', type: 'time' },
-  { key: 'start', type: 'time' },
   { key: 'meeting', type: 'time' },
-  { key: 'lane', type: 'text', placeholder: 'z.B. 3' },
-  { key: 'series', type: 'text', placeholder: 'z.B. Vorlauf 2' },
-  { key: 'link', type: 'url', placeholder: 'https://...' },
-  { key: 'water', type: 'time' }
+  { key: 'start', type: 'time' },
+  { key: 'series', type: 'text', placeholder: 'Serie' },
+  { key: 'lane', type: 'text', placeholder: 'Bahn' },
 ];
 
 function setDate() {
@@ -109,5 +108,4 @@ document.getElementById('exportPngBtn').addEventListener('click', exportPNG);
 document.getElementById('exportPdfBtn').addEventListener('click', exportPDF);
 
 setDate();
-addRow({ athlete: 'Max Muster', warmup: '08:30', start: '09:15', meeting: '08:00', lane: '3', series: 'Vorlauf 1', water: '08:45' });
 addRow();
