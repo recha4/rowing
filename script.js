@@ -71,36 +71,69 @@ function fileName() {
 
 async function exportPNG() {
   prepareExport();
+
+  const area = document.getElementById('exportArea');
+  const oldWidth = area.style.width;
+
+  area.style.width = '1200px';
+
   try {
-    const area = document.getElementById('exportArea');
-    const canvas = await html2canvas(area, { scale: 2, backgroundColor: '#ffffff' });
+    const canvas = await html2canvas(area, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+      windowWidth: 1300
+    });
+
     const link = document.createElement('a');
     link.download = `${fileName()}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
   } finally {
+    area.style.width = oldWidth;
     finishExport();
   }
 }
 
 async function exportPDF() {
   prepareExport();
+
+  const area = document.getElementById('exportArea');
+  const oldWidth = area.style.width;
+
+  // Wichtig: verhindert Abschneiden auf Handy
+  area.style.width = '1200px';
+
   try {
-    const area = document.getElementById('exportArea');
-    const canvas = await html2canvas(area, { scale: 2, backgroundColor: '#ffffff' });
+    const canvas = await html2canvas(area, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+      windowWidth: 1300
+    });
+
     const imgData = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
+
     const pdf = new jsPDF('l', 'mm', 'a4');
 
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
     const margin = 10;
+
     const imgWidth = pageWidth - margin * 2;
     const imgHeight = canvas.height * imgWidth / canvas.width;
 
-    pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, Math.min(imgHeight, pageHeight - margin * 2));
+    pdf.addImage(
+      imgData,
+      'PNG',
+      margin,
+      margin,
+      imgWidth,
+      Math.min(imgHeight, pageHeight - margin * 2)
+    );
+
     pdf.save(`${fileName()}.pdf`);
   } finally {
+    area.style.width = oldWidth;
     finishExport();
   }
 }
@@ -145,6 +178,16 @@ function loadTable() {
     });
     addRow(data);
   });
+}
+
+function subtractMinutes(time, minutes) {
+  if (!time) return '';
+
+  const [hours, mins] = time.split(':').map(Number);
+  const date = new Date();
+  date.setHours(hours, mins - minutes);
+
+  return date.toTimeString().slice(0, 5);
 }
 
 document.addEventListener('input', saveTable);
