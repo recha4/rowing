@@ -1,9 +1,16 @@
 const tableBody = document.getElementById('tableBody');
-{ key: 'lane', type: 'text', placeholder: 'z.B. 3' },
-{ key: 'series', type: 'text', placeholder: 'z.B. Vorlauf 2' },
-{ key: 'link', type: 'url', placeholder: 'https://...' },
-{ key: 'water', type: 'time' }
-    ];
+const exportDate = document.getElementById('exportDate');
+
+const columns = [
+  { key: 'athlete', type: 'text', placeholder: 'Name' },
+  { key: 'warmup', type: 'time' },
+  { key: 'start', type: 'time' },
+  { key: 'meeting', type: 'time' },
+  { key: 'lane', type: 'text', placeholder: 'z.B. 3' },
+  { key: 'series', type: 'text', placeholder: 'z.B. Vorlauf 2' },
+  { key: 'link', type: 'url', placeholder: 'https://...' },
+  { key: 'water', type: 'time' }
+];
 
 function setDate() {
     const today = new Date();
