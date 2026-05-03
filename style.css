@@ -106,7 +106,7 @@ input {
   padding: 9px 10px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .event-name {
@@ -235,4 +235,40 @@ body.race-mode tr.next-race {
 #delayContainer input {
   color: black;
   /* oder var(--text) */
+}
+
+.reload-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  background: rgba(31, 111, 235, 0.6);
+  /* halb transparent */
+  color: white;
+  border: none;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+  font-size: 26px;
+  font-weight: bold;
+
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.reload-btn span {
+  transform: translateY(-1px);
+}
+
+.reload-btn:hover {
+  background: rgba(31, 111, 235, 0.9);
 }

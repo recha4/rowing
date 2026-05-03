@@ -384,6 +384,10 @@ document.getElementById('shareBtn').addEventListener('click', async () => {
   alert('Link kopiert!');
 });
 
+document.getElementById('reloadBtn').addEventListener('click', () => {
+  location.reload();
+});
+
 setDate();
 if (!loadFromURL()) {
   loadTable();
