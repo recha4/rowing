@@ -1,0 +1,58 @@
+:root {
+    .link-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+    }
+
+    .link-container a {
+        display: block;
+        padding: 12px;
+        border-radius: 10px;
+        background: #eef4ff;
+        color: var(--accent-dark);
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .link-container a:hover {
+        background: #dbeafe;
+    }
+
+    footer {
+        text-align: center;
+        color: var(--muted);
+        padding: 24px;
+    }
+
+    @media print {
+        body {
+            background: white;
+        }
+
+        header,
+        .toolbar,
+        .links,
+        footer,
+        .actions,
+        .delete-row {
+            display: none !important;
+        }
+
+        main {
+            max-width: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .schedule-card,
+        #exportArea {
+            box-shadow: none;
+            border: none;
+            padding: 0;
+        }
+
+        table {
+            min-width: 0;
+        }
+    }

@@ -2,32 +2,81 @@
 <html lang="de">
 
 <head>
-  <meta charset="UTF-8">
-  <title>rowing</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>rowing</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
-  <header>
-    <h1>RowingApp</h1>
-    <p>Plane das Regattawochenende!</p>
-  </header>
+    <header>
+        <h1>RowingApp</h1>
+        <p>Plane das Regattawochenende!</p>
+    </header>
 
-  <main>
-    
+    <main>
+        <section class="toolbar">
+            <div class="toolbar-left">
+                <div>
+                    <label for="eventName">Regatta / Anlass</label>
+                    <input class="event-name" id="eventName" type="text" value="Regattaplan" oninput="updateTitle()" />
+                </div>
+            </div>
 
-    <h2>Usefull links</h2>
-    <div class="link-container">
-      <a href="https://www.swissrowing.ch/de" target="_blank">SRV - Website</a>
-      <a href="https://regasoft.swissrowing.ch/portal/RegistrationResult/Regatta" target="_blank">Regasoft - Meldeergebnis</a>
-      <a href="https://regasoft.swissrowing.ch/portal/Live/Regatta" target="_blank">Regasoft - Live</a>
-      <a href="https://www.swissrowvideo.ch/de/index.html" target="_blank">SwissRowVideo</a>
-    </div>
-  </main>
+            <div class="toolbar-right">
+                <button onclick="addRow()">+ Zeile hinzufügen</button>
+                <button class="secondary" onclick="exportPNG()">Als Bild exportieren</button>
+                <button class="secondary" onclick="exportPDF()">Als PDF exportieren</button>
+            </div>
+        </section>
 
-  <footer>
-    <p>©2026 rowing by Chantale</p>
-  </footer>
+        <section class="schedule-card">
+            <div id="exportArea">
+                <div class="export-header">
+                    <div>
+                        <h2 id="exportTitle">Regattaplan</h2>
+                        <p>Übersicht für Sportlerinnen und Sportler</p>
+                    </div>
+                    <p id="exportDate"></p>
+                </div>
+
+                <table id="scheduleTable">
+                    <thead>
+                        <tr>
+                            <th>Sportler</th>
+                            <th>Aufwärmzeit</th>
+                            <th>Startzeit</th>
+                            <th>Rennbesprechung</th>
+                            <th>Bahn</th>
+                            <th>Serie</th>
+                            <th>Link</th>
+                            <th>Aufs Wasser</th>
+                            <th class="actions">Aktion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="links"></section>
+        <h2>Usefull links</h2>
+        <div class="link-container">
+            <a href="https://www.swissrowing.ch/de" target="_blank">SRV - Website</a>
+            <a href="https://regasoft.swissrowing.ch/portal/RegistrationResult/Regatta" target="_blank">Regasoft -
+                Meldeergebnis</a>
+            <a href="https://regasoft.swissrowing.ch/portal/Live/Regatta" target="_blank">Regasoft - Live</a>
+            <a href="https://www.swissrowvideo.ch/de/index.html" target="_blank">SwissRowVideo</a>
+        </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>©2026 rowing by Chantale</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
