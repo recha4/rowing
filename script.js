@@ -15,6 +15,35 @@ const columns = [
   { key: 'lane', type: 'text', placeholder: 'Bahn' },
 ];
 
+function loadFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const dataParam = params.get('data');
+
+  if (!dataParam) return false;
+
+  try {
+    const decoded = JSON.parse(atob(dataParam));
+
+    eventName.value = decoded.name || '';
+    updateTitle();
+
+    tableBody.innerHTML = '';
+
+    decoded.rows.forEach(values => {
+      const data = {};
+      columns.forEach((col, i) => {
+        data[col.key] = values[i] || '';
+      });
+      addRow(data);
+    });
+
+    return true;
+  } catch (e) {
+    console.error('Fehler beim Laden des Links', e);
+    return false;
+  }
+}
+
 function setDate() {
   const today = new Date();
   exportDate.textContent = today.toLocaleDateString('de-CH');
@@ -329,7 +358,35 @@ document.getElementById('delayInput').addEventListener('input', (e) => {
   updateRaceModeRows();
 });
 
+function generateShareLink() {
+  const rows = [];
+
+  document.querySelectorAll('#tableBody tr').forEach(row => {
+    const inputs = row.querySelectorAll('input');
+    rows.push(Array.from(inputs).map(input => input.value));
+  });
+
+  const data = {
+    name: eventName.value,
+    rows: rows
+  };
+
+  const encoded = btoa(JSON.stringify(data)); // encode
+  const url = `${window.location.origin}${window.location.pathname}?data=${encoded}`;
+
+  return url;
+}
+
+document.getElementById('shareBtn').addEventListener('click', async () => {
+  const url = generateShareLink();
+
+  await navigator.clipboard.writeText(url);
+  alert('Link kopiert!');
+});
+
 setDate();
-loadTable();
-sortTable(); 
+if (!loadFromURL()) {
+  loadTable();
+}
+sortTable();
 updateRaceModeButton();
