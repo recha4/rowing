@@ -31,6 +31,25 @@ function addRow(data = {}) {
     input.type = column.type;
     input.placeholder = column.placeholder || '';
     input.value = data[column.key] || '';
+    if (column.key === 'start') {
+      input.addEventListener('input', () => {
+        const inputs = row.querySelectorAll('input');
+
+        const warmupInput = inputs[2];
+        const meetingInput = inputs[3];
+
+        // Nur setzen, wenn leer
+        if (!warmupInput.value) {
+          warmupInput.value = subtractMinutes(input.value, 60);
+        }
+
+        if (!meetingInput.value) {
+          meetingInput.value = subtractMinutes(input.value, 40);
+        }
+
+        saveTable();
+      });
+    }
     cell.appendChild(input);
     row.appendChild(cell);
   });
