@@ -1,3 +1,5 @@
+let delayMinutes = Number(localStorage.getItem('rowingDelay') || 0);
+
 const tableBody = document.getElementById('tableBody');
 const exportDate = document.getElementById('exportDate');
 const eventName = document.getElementById('eventName');
@@ -76,6 +78,19 @@ function prepareExport() {
     el.dataset.oldDisplay = el.style.display;
     el.style.display = 'none';
   });
+
+  document.body.dataset.wasRaceMode = document.body.classList.contains('race-mode');
+  document.body.classList.remove('race-mode');
+}
+
+function finishExport() {
+  document.querySelectorAll('.actions').forEach(el => {
+    el.style.display = el.dataset.oldDisplay || '';
+  });
+
+  if (document.body.dataset.wasRaceMode === 'true') {
+    document.body.classList.add('race-mode');
+  }
 }
 
 function finishExport() {
@@ -211,5 +226,92 @@ function subtractMinutes(time, minutes) {
 
 document.addEventListener('input', saveTable);
 
+let raceMode = localStorage.getItem('rowingRaceMode') === 'true';
+
+function getStartTimeFromRow(row) {
+  const inputs = row.querySelectorAll('input');
+  const startInput = inputs[4];
+
+  if (!startInput || !startInput.value) return null;
+
+  const [hours, minutes] = startInput.value.split(':').map(Number);
+  const raceTime = new Date();
+
+  raceTime.setHours(hours, minutes + delayMinutes, 0, 0);
+
+  return raceTime;
+}
+
+function updateRaceModeRows() {
+  const rows = Array.from(document.querySelectorAll('#tableBody tr'));
+  const now = new Date();
+
+  let nextRow = null;
+  let nextTime = null;
+
+  rows.forEach(row => {
+    row.classList.remove('past-race', 'next-race');
+
+    const startTime = getStartTimeFromRow(row);
+    if (!startTime) return;
+
+    if (startTime < now) {
+      row.classList.add('past-race');
+    } else if (!nextTime || startTime < nextTime) {
+      nextTime = startTime;
+      nextRow = row;
+    }
+  });
+
+  if (nextRow) {
+    nextRow.classList.add('next-race');
+  }
+
+  const btn = document.getElementById('raceModeBtn');
+  const delayContainer = document.getElementById('delayContainer');
+
+  if (raceMode) {
+    document.body.classList.add('race-mode');
+    btn.textContent = 'Regattamodus aus';
+    delayContainer.style.display = 'flex';
+  } else {
+    document.body.classList.remove('race-mode');
+    btn.textContent = 'Regattamodus';
+    delayContainer.style.display = 'none';
+  }
+
+  updateRaceModeRows();
+}
+
+function updateRaceModeButton() {
+  const btn = document.getElementById('raceModeBtn');
+
+  if (raceMode) {
+    document.body.classList.add('race-mode');
+    btn.textContent = 'Regattamodus aus';
+  } else {
+    document.body.classList.remove('race-mode');
+    btn.textContent = 'Regattamodus';
+  }
+
+  updateRaceModeRows();
+}
+
+document.getElementById('raceModeBtn').addEventListener('click', () => {
+  raceMode = !raceMode;
+  localStorage.setItem('rowingRaceMode', raceMode);
+  updateRaceModeButton();
+});
+
+setInterval(updateRaceModeRows, 30000);
+
+document.getElementById('delayInput').value = delayMinutes;
+document.getElementById('delayInput').addEventListener('input', (e) => {
+  delayMinutes = Number(e.target.value) || 0;
+  localStorage.setItem('rowingDelay', delayMinutes);
+  updateRaceModeRows();
+});
+
 setDate();
 loadTable();
+updateRaceModeButton();

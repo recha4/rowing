@@ -11,9 +11,21 @@
 </head>
 
 <body>
-  <header>
-    <h1>RowingApp</h1>
-    <p>Plane das Regattawochenende!</p>
+  <header class="header">
+    <div class="header-content">
+      <div>
+        <h1>RowingApp</h1>
+        <p>Plane das Regattawochenende!</p>
+      </div>
+
+      <div class="header-right">
+        <button id="raceModeBtn">Regattamodus</button>
+
+        <label id="delayContainer">
+          Verspätung (min):  <input type="number" id="delayInput" value="0" min="0">
+        </label>
+      </div>
+    </div>
   </header>
 
   <main>

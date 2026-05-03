@@ -9,7 +9,9 @@
   --danger: #d92d20;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -25,8 +27,41 @@ header {
   color: white;
 }
 
-header h1 { margin: 0 0 8px; }
-header p { margin: 0; }
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-right input {
+  width: 60px;
+  border-radius: 6px;
+  border: none;
+  padding: 4px;
+}
+
+.header-right button {
+  background: white;
+  color: var(--accent-dark);
+}
+
+.header-right button:hover {
+  background: #e0e7ff;
+}
+
+header h1 {
+  margin: 0 0 8px;
+}
+
+header p {
+  margin: 0;
+}
 
 main {
   max-width: 1200px;
@@ -34,7 +69,9 @@ main {
   padding: 0 16px 40px;
 }
 
-.toolbar, .links, .schedule-card {
+.toolbar,
+.links,
+.schedule-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -72,7 +109,9 @@ input {
   font-size: 14px;
 }
 
-.event-name { min-width: 260px; }
+.event-name {
+  min-width: 260px;
+}
 
 button {
   border: none;
@@ -84,7 +123,9 @@ button {
   color: white;
 }
 
-button:hover { background: var(--accent-dark); }
+button:hover {
+  background: var(--accent-dark);
+}
 
 button.secondary {
   background: #eef4ff;
@@ -114,8 +155,14 @@ button.danger {
   margin-bottom: 18px;
 }
 
-.export-header h2 { margin: 0 0 4px; }
-.export-header p { margin: 0; color: var(--muted); }
+.export-header h2 {
+  margin: 0 0 4px;
+}
+
+.export-header p {
+  margin: 0;
+  color: var(--muted);
+}
 
 table {
   width: 100%;
@@ -123,7 +170,8 @@ table {
   min-width: 1050px;
 }
 
-th, td {
+th,
+td {
   border: 1px solid var(--border);
   padding: 8px;
   text-align: left;
@@ -165,4 +213,26 @@ footer {
   text-align: center;
   color: var(--muted);
   padding: 24px;
+}
+
+body.race-mode tr.past-race {
+  opacity: 0.35;
+}
+
+body.race-mode tr.next-race {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+#delayContainer {
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+#delayContainer input {
+  color: black;
+  /* oder var(--text) */
 }
