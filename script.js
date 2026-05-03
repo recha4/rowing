@@ -24,6 +24,22 @@ function updateTitle() {
   exportTitle.textContent = eventName.value.trim() || 'Regattaplan';
 }
 
+function sortTable() {
+  const rows = Array.from(document.querySelectorAll('#tableBody tr'));
+
+  rows.sort((a, b) => {
+    const aTime = getStartTimeFromRow(a);
+    const bTime = getStartTimeFromRow(b);
+
+    if (!aTime) return 1;
+    if (!bTime) return -1;
+
+    return aTime - bTime;
+  });
+
+  rows.forEach(row => tableBody.appendChild(row));
+}
+
 function addRow(data = {}) {
   const row = document.createElement('tr');
 
@@ -49,6 +65,7 @@ function addRow(data = {}) {
           meetingInput.value = subtractMinutes(input.value, 40);
         }
 
+        sortTable();
         saveTable();
       });
     }
@@ -314,4 +331,5 @@ document.getElementById('delayInput').addEventListener('input', (e) => {
 
 setDate();
 loadTable();
+sortTable(); 
 updateRaceModeButton();
